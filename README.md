@@ -1,24 +1,3 @@
-# vue_3.2
-
-## Project setup
-```
-yarn install
-```
-
-### Compiles and hot-reloads for development
-```
-yarn serve
-```
-
-### Compiles and minifies for production
-```
-yarn build
-```
-
-### Lints and fixes files
-```
-yarn lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+## 基于vue3+element-plus+webpack的模板
+### 学习使用，里面有全注释，很详细
+#### 后续还会更新
