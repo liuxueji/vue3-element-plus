@@ -1,50 +1,39 @@
 <template>
-  <el-menu active-text-color="#ffd04b"
-           :background-color="variables.menuBg"
-           class="el-menu-vertical-demo"
-           :default-active="defaultActive"
-           text-color="#fff"
-           router
-           unique-opened
-           :collapse="!$store.getters.siderType">
-    <el-sub-menu :index="item.id"
-                 v-for="(item, index) in menusList"
-                 :key="item.id">
-      <template #title>
-        <el-icon>
-          <!-- 通过动态组件获取图标 -->
-          <component :is="iconList[index]"></component>
-        </el-icon>
-        <span>{{ item.authName }}</span>
-      </template>
-      <!-- 二级导航 -->
-      <el-menu-item :index="'/' + it.path"
-                    v-for="it in item.children"
-                    :key="it.id"
-                    @click="savePath(it.path)">
-        <template #title>
-          <el-icon>
-            <component :is="icon"></component>
+  <!-- 侧边栏1 -->
+  <el-aside class="aside1"
+            width="100px">
+    <div class="aside1_top">
+      <!-- <img src="@/assets/logo.png" alt="" /> -->
+    </div>
+    <div class="aside1_menu">
+      <el-menu default-active="1"
+               class="el-menu-vertical aside1_menu">
+        <el-menu-item v-for="(item,index) in menusList"
+                      :key="item.id"
+                      :index="'/'+item.path">
+          <el-icon class="aside1_icon">
+            <!-- 通过动态组件获取图标 -->
+            <component :is="iconList[index]"></component>
           </el-icon>
-          <span>{{ $t(`menus.${it.path}`) }}</span>
-        </template>
-      </el-menu-item>
-    </el-sub-menu>
-  </el-menu>
+          <span>{{item.authName}}</span>
+        </el-menu-item>
+      </el-menu>
+    </div>
+  </el-aside>
 </template>
 
 <script setup>
 // 调用请求menu数据方法
 import { menuList } from '@/api/menu'
 import { ref } from 'vue'
-import variables from '@/styles/variables.scss'
+// import variables from '@/styles/variables.scss'
 
 // 导入需要的图标
 const iconList = ref(['user', 'setting', 'shop', 'tickets', 'pie-chart'])
-const icon = ref('menu')
+// const icon = ref('menu')
 
 // 默认激活的path，如果本地存储了就用本地的，否则为 '/users'
-const defaultActive = ref(sessionStorage.getItem('path') || '/users')
+// const defaultActive = ref(sessionStorage.getItem('path') || '/users')
 // 定义菜单栏数据
 const menusList = ref([
   // {
@@ -153,9 +142,82 @@ const initMenusList = async () => {
 initMenusList()
 
 // 定义方法存储path路径，当我们点击菜单栏即触发方法
-const savePath = (path) => {
-  sessionStorage.setItem('path', `/${path}`)
-}
+// const savePath = (path) => {
+//   sessionStorage.setItem('path', `/${path}`)
+// }
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+  /* 菜单栏 */
+  .el-menu {
+    width: 100%;
+    border-right: none !important;
+    /* background-color: rgb(250, 250, 250) !important; */
+  }
+
+  .el-menu {
+    width: 100% !important;
+  }
+  .el-aside .aside1 {
+    background-color: rgb(250, 250, 250);
+    height: 100%;
+  }
+  /* 侧边栏1开始 */
+  .aside1_menu {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(250, 250, 250) !important;
+  }
+
+  .aside1_menu > .el-menu-item {
+    height: 80px;
+    width: 80px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(250, 250, 250);
+  }
+
+  .el-menu > .el-menu-item span {
+    line-height: 20px;
+  }
+
+  .aside1_menu .el-menu-item.is-active {
+    color: #fff;
+    border-radius: 5px;
+    background-color: #1890ff !important;
+  }
+
+  .aside1_icon {
+    margin-left: 5px;
+    font-size: 25px;
+    margin-bottom: 10px;
+  }
+
+  .aside1 {
+    position: relative;
+    width: 100px;
+    background-color: rgb(250, 250, 250);
+  }
+
+  .aside1_top {
+    margin: 19px auto 0 auto;
+    width: 50px;
+    height: 50px;
+    border-radius: 30px;
+    overflow: hidden;
+    background-color: rgb(235, 194, 221);
+  }
+
+  .aside1_top img {
+    width: 100%;
+  }
+
+  .aside1_menu {
+    margin-top: 30px;
+  }
+  /* 侧边栏1结束 */
+</style>

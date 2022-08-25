@@ -1,9 +1,7 @@
 <template>
   <el-container class="app-wrapper">
-    <el-aside :width="asideWidth"
-              class="sidebar-container">
-      <Menu />
-    </el-aside>
+    <menu-left />
+    <menu-right />
     <el-container class="container"
                   :class="{ hidderContainer: !$store.getters.siderType }">
       <el-header>
@@ -17,7 +15,8 @@
 </template>
 
 <script setup>
-import Menu from './Menu'
+import menuLeft from './Menu/menuLeft'
+import menuRight from './Menu/menuRight'
 import Headers from './headers'
 import { computed } from 'vue'
 import variables from '@/styles/variables.scss'
